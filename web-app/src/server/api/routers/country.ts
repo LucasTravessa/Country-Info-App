@@ -1,32 +1,31 @@
-import { ICountry } from "~/models/country";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-
-// Mocked DB
-const countries: ICountry[] = [
-  {
-    countryCode: "AD",
-    name: "Andorra",
-  },
-  {
-    countryCode: "AL",
-    name: "Albania",
-  },
-  {
-    countryCode: "AM",
-    name: "Armenia",
-  },
-  {
-    countryCode: "AR",
-    name: "Argentina",
-  },
-  {
-    countryCode: "AT",
-    name: "Austria",
-  },
-];
+import { countryAPIService } from "~/services/CountryAPIService";
 
 export const countriesRouter = createTRPCRouter({
-  getAll: publicProcedure.query(() => {
-    return countries;
+  getAll: publicProcedure.query(async () => {
+    const response = await countryAPIService.getAllCountries();
+    if (!response?.success)
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: response?.message,
+      });
+    return response?.responseObject;
   }),
+  getByID: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const response = await countryAPIService.getCountry(input.id);
+      if (!response?.success)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: response?.message,
+        });
+      return response?.responseObject;
+    }),
 });
