@@ -1,47 +1,59 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 
-interface PopulationData {
-  year: number;
-  population: number;
-}
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "~/components/ui/chart";
+
+import { IPopulationSchema } from "~/models/country";
+
+const chartConfig = {
+  desktop: {
+    label: "Desktop",
+    color: "#2563eb",
+  },
+} satisfies ChartConfig;
+
+type IPopulationChartProps = {
+  data: IPopulationSchema[];
+};
 
 export default function PopulationChart({
-  countryName,
-}: {
-  countryName: string;
-}) {
-  const [data, setData] = useState<PopulationData[]>([]);
-
-  useEffect(() => {
-    // In a real application, you would fetch this data from an API
-    // For this example, we'll generate some mock data
-    const mockData: PopulationData[] = [
-      { year: 2010, population: Math.floor(Math.random() * 10000000) },
-      { year: 2011, population: Math.floor(Math.random() * 10000000) },
-      { year: 2012, population: Math.floor(Math.random() * 10000000) },
-      { year: 2013, population: Math.floor(Math.random() * 10000000) },
-      { year: 2014, population: Math.floor(Math.random() * 10000000) },
-      { year: 2015, population: Math.floor(Math.random() * 10000000) },
-      { year: 2016, population: Math.floor(Math.random() * 10000000) },
-      { year: 2017, population: Math.floor(Math.random() * 10000000) },
-      { year: 2018, population: Math.floor(Math.random() * 10000000) },
-      { year: 2019, population: Math.floor(Math.random() * 10000000) },
-      { year: 2020, population: Math.floor(Math.random() * 10000000) },
-    ];
-
-    setData(mockData);
-  }, []);
-
+  data,
+}: IPopulationChartProps): React.ReactElement {
   return (
-    <div>
-      {data.map((item) => (
-        <div key={item.year} className="flex items-center">
-          <span className="mr-2">{item.year}</span>
-          <span>{item.population.toLocaleString()}</span>
-        </div>
-      ))}
-    </div>
+    <ChartContainer config={chartConfig}>
+      <AreaChart
+        accessibilityLayer
+        data={data}
+        margin={{
+          left: 12,
+          right: 12,
+        }}
+      >
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="year"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+        />
+        <ChartTooltip
+          cursor={false}
+          content={<ChartTooltipContent indicator="line" />}
+        />
+        <Area
+          dataKey="value"
+          type="natural"
+          fill="var(--color-desktop)"
+          fillOpacity={0.4}
+          stroke="var(--color-desktop)"
+        />
+      </AreaChart>
+    </ChartContainer>
   );
 }
