@@ -4,19 +4,20 @@ import { z } from 'zod';
 
 import { createApiResponse } from '@/docs/openAPIResponseBuilders';
 import { validateRequest } from '@/common/utils/httpHandlers';
-import { CountrySchema, GetCountrySchema } from './countryModel';
+import { getCountrySchema, GetCountrySchema } from './countryModel';
 import { countryController } from './countryController';
+import { countrySchema } from './countryModel';
 
 export const countryRegistry = new OpenAPIRegistry();
 export const countryRouter: Router = express.Router();
 
-countryRegistry.register('Country', CountrySchema);
+countryRegistry.register('Country', countrySchema);
 
 countryRegistry.registerPath({
   method: 'get',
   path: '/countries',
   tags: ['Country'],
-  responses: createApiResponse(z.array(CountrySchema), 'Success'),
+  responses: createApiResponse(z.array(countrySchema), 'Success'),
 });
 
 countryRouter.get('/', countryController.getCountries);
@@ -26,7 +27,7 @@ countryRegistry.registerPath({
   path: '/countries/{id}',
   tags: ['Country'],
   request: { params: GetCountrySchema.shape.params },
-  responses: createApiResponse(CountrySchema, 'Success'),
+  responses: createApiResponse(getCountrySchema, 'Success'),
 });
 
 countryRouter.get(
