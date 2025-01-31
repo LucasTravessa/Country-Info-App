@@ -4,9 +4,9 @@ services:
     depends_on:
       - back_end
     build:
-      context: ./web_app
+      context: ./web-app
     env_file:
-      - web_app/.env
+      - web-app/.env
     ports:
       - "80:3000"
     networks:
@@ -15,9 +15,9 @@ services:
   back_end:
     container_name: back_end
     build:
-      context: ./back_end
+      context: ./back-end
     env_file:
-      - back_end/.env
+      - back-end/.env
     ports:
       - "8080:8080"
     networks:
