@@ -5,7 +5,7 @@ import { ThemeToggle } from "./ThemeToggle";
 export default function GlobalHeader() {
   return (
     <nav className="border-b">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto flex flex-row justify-between px-4 py-4">
         <Link href="/" className="text-xl font-semibold">
           Country Info App
         </Link>
