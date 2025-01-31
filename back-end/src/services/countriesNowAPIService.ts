@@ -18,7 +18,6 @@ class CountriesNowAPIService {
       const country = populationRes.data.data.find(
         (c: any) => c.iso3 === countryCode,
       );
-      logger.info(`Country population found for ${country}`);
       const populationData = country.populationCounts || [];
       return ServiceResponse.success<any>(
         'Country population found',

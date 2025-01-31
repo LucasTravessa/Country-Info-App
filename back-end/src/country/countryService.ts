@@ -25,6 +25,7 @@ export class CountryService {
         !countryPopulation.success ||
         !countryFlag.success
       ) {
+        logger.error(`Error finding Country with id ${id}`);
         return ServiceResponse.failure(
           'Country not found',
           null,
@@ -37,6 +38,7 @@ export class CountryService {
         population: countryPopulation.responseObject,
         flag: countryFlag.responseObject.flag,
       };
+      logger.info(`Country found with id ${id}`);
       return ServiceResponse.success<any>('Country found', responseObject);
     } catch (ex) {
       const errorMessage = `Error finding Country with id ${id}:, ${(ex as Error).message}`;
