@@ -18,12 +18,13 @@ The back-end of the application is powered by Expresss, typescript, zod and swag
 
 ### Running the Project in Development Mode
 
-1. Copy the `.env.example` file to a `.env` file in both the `web-app` and `back-end` directories.
-2. Navigate to the `web-app` directory and run `npm install`.
-3. In the `web-app` directory, run `npm run dev`.
-4. Navigate to the `back-end` directory and run `npm install`.
-5. In the `back-end` directory, run `npm run dev`.
-6. Open `http://localhost:3000` for the front-end and `http://localhost:8080` for the backend Swagger.
+1. Change in the `web-app` `.env` to the BACKEND_URL used on localhost.
+2. Copy the `.env.example` file to a `.env` file in both the `web-app` and `back-end` directories.
+3. Navigate to the `web-app` directory and run `npm install`.
+4. In the `web-app` directory, run `npm run dev`.
+5. Navigate to the `back-end` directory and run `npm install`.
+6. In the `back-end` directory, run `npm run dev`.
+7. Open `http://localhost:3000` for the front-end and `http://localhost:8080` for the backend Swagger.
 
 ### Future Improvements
 
