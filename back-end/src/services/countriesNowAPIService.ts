@@ -44,8 +44,7 @@ class CountriesNowAPIService {
       const country = flagRes.data.data.find(
         (c: any) => c.iso2 === countryCode,
       );
-      const flagUrl = country.flag || '';
-      return ServiceResponse.success<any>('Country flag found', flagUrl);
+      return ServiceResponse.success<any>('Country flag found', country);
     } catch (ex) {
       const errorMessage = `Error fetching country flag for ${countryCode}: ${(ex as Error).message}`;
       logger.error(errorMessage);

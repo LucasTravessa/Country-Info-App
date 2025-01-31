@@ -15,12 +15,14 @@ export class CountryService {
   async findById(id: string): Promise<ServiceResponse<any | null>> {
     try {
       const borders = await nagerAPIService.getCountryBorders(id);
-      // const countryPopulation =
-      //   await countriesNowAPIService.getCountryPopulation(id);
       const countryFlag = await countriesNowAPIService.getCountryFlag(id);
+      const countryPopulation =
+        await countriesNowAPIService.getCountryPopulation(
+          countryFlag.responseObject.iso3,
+        );
       if (
         !borders.success ||
-        // !countryPopulation.success ||
+        !countryPopulation.success ||
         !countryFlag.success
       ) {
         return ServiceResponse.failure(
@@ -30,9 +32,10 @@ export class CountryService {
         );
       }
       const responseObject = {
+        name: countryFlag.responseObject.name,
         borders: borders.responseObject,
-        // population: countryPopulation.responseObject,
-        flag: countryFlag.responseObject,
+        population: countryPopulation.responseObject,
+        flag: countryFlag.responseObject.flag,
       };
       return ServiceResponse.success<any>('Country found', responseObject);
     } catch (ex) {
