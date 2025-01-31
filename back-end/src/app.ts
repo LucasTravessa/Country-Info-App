@@ -7,7 +7,6 @@ import errorHandler from '@/common/middleware/errorHandler';
 import rateLimiter from '@/common/middleware/rateLimiter';
 import requestLogger from '@/common/middleware/requestLogger';
 import { env } from '@/common/utils/envConfig';
-import { userRouter } from './user-test/userRouter';
 import { countryRouter } from './country/countryRouter';
 
 const logger = pino({ name: 'server start' });
@@ -27,7 +26,6 @@ app.use(rateLimiter);
 app.use(requestLogger);
 
 // Routes
-app.use('/users', userRouter);
 app.use('/countries', countryRouter);
 
 // Swagger UI

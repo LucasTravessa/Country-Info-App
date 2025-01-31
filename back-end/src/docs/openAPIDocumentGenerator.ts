@@ -3,11 +3,10 @@ import {
   OpenApiGeneratorV3,
 } from '@asteasolutions/zod-to-openapi';
 
-import { userRegistry } from '@/user-test/userRouter';
 import { countryRegistry } from '@/country/countryRouter';
 
 export function generateOpenAPIDocument() {
-  const registry = new OpenAPIRegistry([userRegistry, countryRegistry]);
+  const registry = new OpenAPIRegistry([countryRegistry]);
   const generator = new OpenApiGeneratorV3(registry.definitions);
 
   return generator.generateDocument({
